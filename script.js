@@ -1,6 +1,8 @@
-let list = [];
+let list = JSON.parse(localStorage.getItem('todolist')) || [];
 
-
+function saveList() {
+    localStorage.setItem('todolist', JSON.stringify(list));
+}
 
 function displaylist() {
     let todolist = '';
@@ -13,34 +15,23 @@ function displaylist() {
         const addedhtml = `
         <div class="output">
             <div class="left">
-                <p>
-
-                ${todoObject.name}
-                </p>
+                <p>${name}</p>
             </div>
-
             <div class="middle">
-                <p>
-                ${todoObject.date}
-                </p>
+                <p>${date}</p>
             </div>
-
-                <button class="delete" onclick="
+            <button class="delete" onclick="
                 list.splice(${i}, 1);
+                saveList();
                 displaylist();
-                ">Delete</button>
-            
-            
+            ">Delete</button>
         </div>`;
+        
         todolist += addedhtml;
     }
 
     document.querySelector('.container').innerHTML = todolist;
 }
-
-
-
-
 
 function addlist() {
     const inputelement1 = document.querySelector('.listinput');
@@ -55,127 +46,9 @@ function addlist() {
         });
         inputelement1.value = '';
         inputelement2.value = '';
+        saveList();
         displaylist();
     }
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-const dateInput = document.getElementById('dateInput');
-
-dateInput.addEventListener('focus', function() {
-    this.classList.add('active');
-})
-dateInput.addEventListener('blur', function() {
-    this.classList.remove('active');
-})
-dateInput.addEventListener('click', function() {
-    this.showPicker();
-})
+displaylist();
